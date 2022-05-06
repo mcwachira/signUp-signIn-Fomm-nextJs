@@ -8,6 +8,11 @@ const SignUp = () => {
         <Fragment>
 
             <div className={classes.container}>
+
+                <div className={classes.imageContainer}>
+
+                    <img src="./images/undraw_launch_day_4e04.svg" alt="austronaut" className={classes.image} />
+                </div>
                 <div className={classes.form}>
 
 
@@ -40,7 +45,7 @@ const SignUp = () => {
                         <input type="password" name="name" id="Password" className={classes.input} placeholder="Password" />
                     </div>
 
-                    <button type='submit'> Submit</button>
+                    <button className={classes.button} type='submit'> Submit</button>
                 </div>
 
 
