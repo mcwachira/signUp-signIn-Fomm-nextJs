@@ -4,6 +4,30 @@ import { Fragment, useState } from "react"
 import Image from 'next/image'
 
 const SignUp = () => {
+
+    const [formData, setFormData] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+    });
+
+
+    const handleChange = (e) => {
+        setFormData(initialState => ({
+            ...initialState,
+            [e.target.name]: e.target.value
+        }))
+    }
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('First name :', formData.firstName)
+        console.log('Last name :', formData.lastName)
+        console.log('Email :', formData.email)
+
+    }
     return (
         <Fragment>
 
@@ -24,28 +48,32 @@ const SignUp = () => {
                         Lets create Your Account!
                     </div>
 
-                    <div className={classes.inputContainer}>
+                    <form action="" onSubmit={handleSubmit}>
+                        <div className={classes.inputContainer}>
 
-                        <input type="text" name="name" id="firstName" className={classes.input} placeholder="First Name" />
-                    </div>
+                            <input type="text" name="firstName" className={classes.input} placeholder="First Name" value={formData.firstName || ""} onChange={handleChange} required />
+                        </div>
 
-                    <div className={classes.inputContainer}>
+                        <div className={classes.inputContainer}>
 
-                        <input type="text" name="name" id="LastName" className={classes.input} placeholder="Last Name" />
-                    </div>
+                            <input type="text" name="lastName" className={classes.input} placeholder="Last Name" value={formData.lastName} onChange={handleChange} required />
+                        </div>
 
-                    <div className={classes.inputContainer}>
+                        <div className={classes.inputContainer}>
 
-                        <input type="email" name="name" id="Email" className={classes.input} placeholder="Email" />
-                    </div>
+                            <input type="email" name="email" className={classes.input} placeholder="Email" value={formData.email} onChange={handleChange} required />
+                        </div>
 
 
-                    <div className={classes.inputContainer}>
+                        <div className={classes.inputContainer}>
 
-                        <input type="password" name="name" id="Password" className={classes.input} placeholder="Password" />
-                    </div>
+                            <input type="password" name="password" className={classes.input} placeholder="Password" value={formData.password} onChange={handleChange} required />
+                        </div>
 
-                    <button className={classes.button} type='submit'> Submit</button>
+                        <button className={classes.button} type='submit'> Submit</button>
+                    </form>
+
+
                 </div>
 
 

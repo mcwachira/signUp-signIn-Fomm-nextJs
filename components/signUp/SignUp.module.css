@@ -64,7 +64,7 @@
 
 .input {
     width: 100%;
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding: 1rem 4rem;
     margin: .8rem auto;
     border-radius: 7px;
@@ -84,5 +84,6 @@
     outline: none;
     font-size: 1.3rem;
     color: rgb(255, 252, 252);
+    cursor: pointer;
 
 }
