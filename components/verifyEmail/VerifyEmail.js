@@ -3,6 +3,7 @@ import { auth } from '../../firebase/firebase'
 import { sendEmailVerification } from 'firebase/auth'
 import classes from './verifyEmail.module.css'
 import { useAuthValue } from '../../context/Authcontext'
+import { useRouter } from 'next/router'
 
 // enables us to get the email of the user who sign up
 
@@ -12,24 +13,37 @@ const VerifyEmail = () => {
     const { timeActive, setTimeActive } = useAuthValue()
     const [buttonDisabled, setButtonDisabled] = useState(false)
     const { currentUser } = useAuthValue();
+    const router = useRouter()
 
+
+    // useEffect(() => {
+    //     let interval = null;
+    //     if (timeActive && time !== 0) {
+
+    //         //count down from 60s
+    //         interval = setInterval(() => {
+    //             setTime((time) => time - 1);
+    //         }, 1000)
+    //     } else if (time === 0) {
+    //         setTimeActive(false)
+    //         setTime(60)
+    //         clearInterval(interval)
+    //     } else if (verified === true) {
+    //         router.push('/')
+    //     }
+    //     return () => clearInterval(interval)
+    // }, [time, timeActive, setTimeActive])
 
     useEffect(() => {
-        let interval = null;
-        if (timeActive && time !== 0) {
-
-            //count down from 60s
-            interval = setInterval(() => {
-                setTime((time) => time - 1);
-            }, 1000)
-        } else if (time === 0) {
-            setTimeActive(false)
-            setTime(60)
-            clearInterval(interval)
-        }
-        return () => clearInterval(interval)
-    }, [time, timeActive])
-
+        const interval = setInterval(() => {
+            currentUser?.reload().then(() => {
+                if (currentUser?.emailVerified) {
+                    clearInterval(interval)
+                    router.push('/')
+                }
+            }).catch((error) => console.log('error:', error))
+        })
+    }, [router, currentUser])
 
     const resendEmailVerification = () => {
         setButtonDisabled(true);
