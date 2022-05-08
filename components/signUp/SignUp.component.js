@@ -1,9 +1,16 @@
 
 import classes from './SignUp.module.css'
 import { Fragment, useState } from "react"
+
+import { auth } from '../../firebase/firebase'
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
+import { useRouter } from 'next/router'
 import Image from 'next/image'
 
 const SignUp = () => {
+
+
+    const router = useRouter()
 
     const [formData, setFormData] = useState({
         firstName: "",
@@ -23,13 +30,21 @@ const SignUp = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // formData.firstName, formData.lastName,
 
+        createUserWithEmailAndPassword(auth, formData.email, formData.password).then((res) => {
+            sendEmailVerification(auth.currentUser)
+            console.log(res.user)
+        }).then(() => {
+            router.push('/verify')
+        }).catch((error) => console.log('error:', error))
         const data = {
             firstName: formData.firstName,
             lastName: formData.lastName,
             email: formData.email,
             password: formData.password,
         }
+
         // console.log('First name :', formData.firstName )
         // console.log('Last name :', formData.lastName)
         // console.log('Email :', formData.email)
@@ -106,7 +121,13 @@ const SignUp = () => {
                             <input type="password" name="password" className={classes.input} placeholder="Password" value={formData.password} onChange={handleChange} required />
                         </div>
 
-                        <button className={classes.button} type='submit'> Submit</button>
+                        <div className={classes.signupButtons}>
+
+                            <button className={classes.button} type='submit'> Sign Up</button>
+                            <button className={`${classes.button} ${classes.googleButton}`} type='submit'> Sign Up with Google</button>
+
+
+                        </div>
                     </form>
 
 

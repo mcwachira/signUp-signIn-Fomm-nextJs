@@ -5,7 +5,10 @@ import SignUp from '../components/signUp/SignUp.component'
 SignIn
 import styles from '../styles/Home.module.css'
 
+
+
 export default function Home() {
+
   return (
     <div className={styles.container}>
       <Head>
@@ -14,8 +17,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <SignUp />
-      {/* <SignIn /> */}
     </div>
   )
 }
