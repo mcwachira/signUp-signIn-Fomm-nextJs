@@ -5,12 +5,14 @@ import { Fragment, useState } from "react"
 import { auth } from '../../firebase/firebase'
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
 import { useRouter } from 'next/router'
+import { AuthProvider, useAuthValue } from '../../context/Authcontext'
 import Image from 'next/image'
 
 const SignUp = () => {
 
 
     const router = useRouter()
+    const { setTimeActive } = useAuthValue()
 
     const [formData, setFormData] = useState({
         firstName: "",
@@ -34,8 +36,10 @@ const SignUp = () => {
 
         createUserWithEmailAndPassword(auth, formData.email, formData.password).then((res) => {
             sendEmailVerification(auth.currentUser)
+
             console.log(res.user)
         }).then(() => {
+            setTimeActive(true)
             router.push('/verify')
         }).catch((error) => console.log('error:', error))
         const data = {

@@ -7,6 +7,7 @@ import { AuthProvider } from '../context/Authcontext';
 function MyApp({ Component, pageProps }) {
 
   const [currentUser, setCurrentUser] = useState(null)
+  const [timeActive, setTimeActive] = useState(false)
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -14,7 +15,7 @@ function MyApp({ Component, pageProps }) {
     })
   }, [])
   return (
-    <AuthProvider value={{ currentUser }}>
+    <AuthProvider value={{ currentUser, timeActive, setTimeActive }}>
 
       <Component {...pageProps} />)
 
